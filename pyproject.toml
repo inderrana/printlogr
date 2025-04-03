@@ -1,10 +1,60 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "printlogr"
+version = "0.3.1"
+authors = [
+    { name = "Inder Rana" }
+]
+description = "A Python library for logging and PDF report generation"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+dependencies = [
+    "reportlab>=4.0.0"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Logging",
+    "Topic :: Text Processing :: Markup"
+]
+keywords = ["logging", "print", "timestamp", "pdf", "csv", "txt"]
+
+[project.urls]
+"Homepage" = "https://github.com/inderrana/printlogr"
+"Bug Tracker" = "https://github.com/inderrana/printlogr/issues"
+
+[project.scripts]
+printlogr = "printlogr.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "isort>=5.0.0",
+    "flake8>=4.0.0",
+    "twine>=4.0.0",
+    "build>=1.0.0"
+]
+
+[tool.setuptools]
+packages = ["printlogr"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "--cov=printlogr --cov-report=term-missing"
 
 [tool.black]
 line-length = 88
-target-version = ['py37']
+target-version = ["py37"]
 include = '\.pyi?$'
 
 [tool.isort]

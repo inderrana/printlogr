@@ -4,18 +4,21 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="printlog",
-    version="0.1.0",
+    name="printlogr",
+    version="0.3.1",
     author="Inder Rana",
     description="A Python library for logging print statements with timestamps",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/inderrana/printlog",
+    url="https://github.com/inderrana/printlogr",
     project_urls={
-        "Bug Tracker": "https://github.com/inderrana/printlog/issues",
-        "Documentation": "https://github.com/inderrana/printlog#readme",
+        "Bug Tracker": "https://github.com/inderrana/printlogr/issues",
+        "Documentation": "https://github.com/inderrana/printlogr#readme",
     },
     packages=find_packages(),
+    package_data={
+        "printlogr": ["py.typed"],
+    },
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
@@ -48,7 +51,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "printlog=printlog.cli:main",
+            "printlogr=printlogr.cli:main",
         ],
     },
     include_package_data=True,

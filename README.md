@@ -1,19 +1,18 @@
-# PrintLog
+# PrintLogr
 
-A Python library that captures print statements and saves them with timestamps in various formats (TXT, CSV, PDF).
+A Python library for logging messages with timestamps in various formats (TXT, CSV, PDF).
 
 ## Features
 
-- Automatically captures all print statements
-- Adds timestamps to each log entry
-- Supports multiple export formats (TXT, CSV, PDF)
+- Simple logging with timestamps using `plog()` method
+- Multiple export formats (TXT, CSV, PDF)
 - Context manager support
 - Clean and organized log format
 
 ## Installation
 
 ```bash
-pip install printlog
+pip install printlogr
 ```
 
 ## Usage
@@ -21,14 +20,14 @@ pip install printlog
 ### Basic Usage
 
 ```python
-from printlog import PrintLogger
+from printlogr import PrintLogger
 
 # Create a logger instance
 logger = PrintLogger()
 
-# Your print statements will now be logged
-print("Hello, World!")
-print("This is a test message")
+# Log messages - they will be displayed and logged
+logger.plog("Hello, World!")
+logger.plog("This is a test message")
 
 # Save logs to a file
 logger.save_logs()  # Saves as TXT by default
@@ -37,12 +36,12 @@ logger.save_logs()  # Saves as TXT by default
 ### Using Different Export Formats
 
 ```python
-from printlog import PrintLogger
+from printlogr import PrintLogger
 
 logger = PrintLogger()
 
-print("First message")
-print("Second message")
+logger.plog("First message")
+logger.plog("Second message")
 
 # Save as different formats
 logger.save_logs(format="txt", output_file="output.txt")
@@ -53,29 +52,33 @@ logger.save_logs(format="pdf", output_file="output.pdf")
 ### Using as Context Manager
 
 ```python
-from printlog import PrintLogger
+from printlogr import PrintLogger
 
 with PrintLogger() as logger:
-    print("This message will be logged")
-    print("And this one too")
-
-# Logs are automatically saved when the context manager exits
+    logger.plog("This message will be logged")
+    logger.plog("And this one too")
+    # Logs are automatically saved when the context manager exits
 ```
 
-### Accessing Logs Programmatically
+### Advanced Usage
 
 ```python
-from printlog import PrintLogger
+from printlogr import PrintLogger
 
 logger = PrintLogger()
 
-print("Test message 1")
-print("Test message 2")
+# plog works like print - supports multiple arguments
+logger.plog("Value:", 42, "Status:", True)
 
-# Get all logs
-logs = logger.get_logs()
-for timestamp, message in logs:
-    print(f"{timestamp}: {message}")
+# Supports sep and end parameters like print
+logger.plog("Hello", "World", sep="-", end="!\n")
+
+# Get logs programmatically
+logs = logger.get_logs()  # Returns list of (timestamp, message) tuples
+
+# Get logs as formatted string
+log_string = logger.display_logs()
+print(log_string)
 
 # Clear logs if needed
 logger.clear_logs()
@@ -97,8 +100,36 @@ Timestamp,Message
 ```
 
 ### PDF Format
-A nicely formatted PDF document with timestamps and messages.
+A nicely formatted PDF document with timestamps and messages in a table format.
+
+## API Reference
+
+### PrintLogger Class
+
+#### `__init__(log_file: str = "print_log.txt")`
+Initialize the logger with optional log file path.
+
+#### `plog(*args, sep=' ', end='\n', file=None)`
+Log and display a message. Works like the built-in `print()` function.
+- `*args`: Values to log and display
+- `sep`: Separator between values (default: space)
+- `end`: String to append at the end (default: newline)
+- `file`: Optional file object to write to (default: sys.stdout)
+
+#### `save_logs(format: str = "txt", output_file: Optional[str] = None)`
+Save logs in the specified format.
+- `format`: Output format ('txt', 'csv', or 'pdf')
+- `output_file`: Output file path (optional)
+
+#### `get_logs() -> List[tuple]`
+Get all logged messages with their timestamps.
+
+#### `clear_logs()`
+Clear all stored logs.
+
+#### `display_logs() -> str`
+Get all logs as a formatted string.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the LICENSE file for details.
